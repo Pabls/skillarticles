@@ -50,7 +50,7 @@
             android:layout_marginBottom="@dimen/margin_8"
             android:elevation="@dimen/elevation_8"
             android:visibility="gone"
-            app:layout_behavior=".ui.custom.behaviors.SubmenuBehavior"
+            app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
             android:theme="@style/ArticleBarsTheme"
             app:layout_dodgeInsetEdges="bottom" />
 
