@@ -50,7 +50,7 @@
             android:layout_marginBottom="@dimen/margin_8"
             android:elevation="@dimen/elevation_8"
             android:visibility="gone"
-            app:layout_behavior=".ui.custom.behaviors.SubmenuBehavior"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:theme="@style/ArticleBarsTheme"
             app:layout_dodgeInsetEdges="bottom" />
 
@@ -58,7 +58,7 @@
             android:id="@+id/bottombar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:layout_behavior=".ui.custom.behaviors.BottombarBehavior"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             android:layout_gravity="bottom"
             android:elevation="@dimen/elevation_4"
             android:theme="@style/ArticleBarsTheme"
