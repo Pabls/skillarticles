@@ -13,5 +13,8 @@ class PrefManager(context: Context) {
     val storedLong by PrefDelegate(Long.MAX_VALUE)
     val storedFloat by PrefDelegate(100f)
 
+
+
     fun clearAll() = preferences.edit().clear().apply()
+
 }

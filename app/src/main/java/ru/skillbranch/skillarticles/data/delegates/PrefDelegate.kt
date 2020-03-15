@@ -20,7 +20,6 @@ class PrefDelegate<T>(private val defaultValue: T) : ReadWriteProperty<PrefManag
             return storedValue
         }
     }
-
     override fun setValue(thisRef: PrefManager, property: KProperty<*>, value: T?) {
         with(thisRef.preferences.edit()) {
             when (value) {

@@ -1,5 +1,6 @@
 package ru.skillbranch.skillarticles.extensions
 
+import android.view.View
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.widget.NestedScrollView
 
@@ -14,4 +15,13 @@ fun NestedScrollView.setMarginOptionally(
     if (top >= 0) (layoutParams as CoordinatorLayout.LayoutParams).topMargin = top
     if (right >= 0) (layoutParams as CoordinatorLayout.LayoutParams).rightMargin = right
 
+}
+
+fun View.setPaddingOptionally(
+    left: Int = paddingLeft,
+    right: Int = paddingRight,
+    top: Int = paddingTop,
+    bottom: Int = paddingBottom
+) {
+    setPadding(left, top, right, bottom)
 }
