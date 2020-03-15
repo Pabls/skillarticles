@@ -8,12 +8,12 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "ru.skillbranch.skillarticles"
+        applicationId "ru.skillbranch.ru.skillbranch.skillarticles"
         minSdkVersion 23
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "ru.skillbranch.skillarticles.CustomTestRunner"
+        testInstrumentationRunner "ru.skillbranch.ru.skillbranch.skillarticles.CustomTestRunner"
     }
     buildTypes {
         release {

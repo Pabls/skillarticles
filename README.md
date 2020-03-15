@@ -1,2 +1,2 @@
 lesson-3
-# skillarticles
+# ru.skillbranch.skillarticles

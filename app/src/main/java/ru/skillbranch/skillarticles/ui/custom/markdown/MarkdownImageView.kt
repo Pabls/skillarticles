@@ -266,7 +266,7 @@ class MarkdownImageView private constructor(
 }
 
 class AspectRatioResizeTransform : BitmapTransformation() {
-    private val ID = "ru.skillbranch.skillarticles.glide.AspectRatioResizeTransform"
+    private val ID = "ru.skillbranch.ru.skillbranch.skillarticles.glide.AspectRatioResizeTransform"
     private val ID_BYTES = ID.toByteArray(Charset.forName("UTF-8"))
 
     override fun updateDiskCacheKey(messageDigest: MessageDigest) {

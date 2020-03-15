@@ -13,7 +13,7 @@ import ru.skillbranch.skillarticles.extensions.groupByBounds
 import ru.skillbranch.skillarticles.extensions.setPaddingOptionally
 import kotlin.properties.Delegates
 
-//import ru.skillbranch.skillarticles.data.repositories.MarkdownElement
+//import ru.skillbranch.ru.skillbranch.skillarticles.data.repositories.MarkdownElement
 
 class MarkdownContentView @JvmOverloads constructor(
     context: Context,
