@@ -44,6 +44,7 @@ class HorizontalRuleSpan(
                 paint
             )
         }
+
     }
 
     private inline fun Paint.forLine(block: () -> Unit) {
@@ -54,9 +55,7 @@ class HorizontalRuleSpan(
         color = ruleColor
         style = Paint.Style.STROKE
         strokeWidth = ruleWidth
-
         block()
-
         color = oldColor
         style = oldStyle
         strokeWidth = oldWidth

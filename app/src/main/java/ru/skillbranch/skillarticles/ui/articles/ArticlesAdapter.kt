@@ -9,19 +9,20 @@ import kotlinx.android.extensions.LayoutContainer
 import ru.skillbranch.skillarticles.data.models.ArticleItemData
 import ru.skillbranch.skillarticles.ui.custom.ArticleItemView
 
-class ArticlesAdapter(private val listener: (ArticleItemData) -> Unit,
-                      private val bookmarkListener: (String, Boolean) -> Unit) :
+class ArticlesAdapter(
+    private val listener: (ArticleItemData) -> Unit,
+    private val toggleBookmarkListener: (ArticleItemData) -> Unit
+) :
     PagedListAdapter<ArticleItemData, ArticleVH>(ArticleDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleVH {
-//        val containerView =
-//            LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
         val containerView = ArticleItemView(parent.context)
         return ArticleVH(containerView)
     }
 
     override fun onBindViewHolder(holder: ArticleVH, position: Int) {
-        holder.bind(getItem(position), listener, bookmarkListener)
+        holder.bind(getItem(position), listener, toggleBookmarkListener)
     }
+
 }
 
 class ArticleDiffCallback : DiffUtil.ItemCallback<ArticleItemData>() {
@@ -30,21 +31,17 @@ class ArticleDiffCallback : DiffUtil.ItemCallback<ArticleItemData>() {
 
     override fun areContentsTheSame(oldItem: ArticleItemData, newItem: ArticleItemData): Boolean =
         oldItem == newItem
-
 }
 
 class ArticleVH(override val containerView: View) : RecyclerView.ViewHolder(containerView),
     LayoutContainer {
-
     fun bind(
         item: ArticleItemData?,
         listener: (ArticleItemData) -> Unit,
-        bookmarkListener: (String, Boolean) -> Unit
+        toggleBookmarkListener: (ArticleItemData) -> Unit
     ) {
-
-        //if use placeholder item may be null
-        (containerView as ArticleItemView).bind(item!!, bookmarkListener)
+        (containerView as ArticleItemView).bind(item!!, toggleBookmarkListener)
         itemView.setOnClickListener { listener(item) }
-    }
 
+    }
 }

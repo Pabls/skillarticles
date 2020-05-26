@@ -4,38 +4,34 @@ import ru.skillbranch.skillarticles.data.local.PrefManager
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
-@Suppress("UNCHECKED_CAST")
 class PrefDelegate<T>(private val defaultValue: T) : ReadWriteProperty<PrefManager, T?> {
-    private var value: T? = null
+    private var storedValue: T? = null
 
     override fun getValue(thisRef: PrefManager, property: KProperty<*>): T? {
-        if (value == null) {
-            val key = property.name
-            value = when (defaultValue) {
-                is Boolean -> thisRef.preferences.getBoolean(key, defaultValue) as? T
-                is String -> thisRef.preferences.getString(key, defaultValue) as? T
-                is Float -> thisRef.preferences.getFloat(key, defaultValue) as? T
-                is Int -> thisRef.preferences.getInt(key, defaultValue) as? T
-                is Long -> thisRef.preferences.getLong(key, defaultValue) as? T
-                else -> throw IllegalArgumentException("Value must be primitive type")
+        with(thisRef.preferences) {
+            if(storedValue == null) storedValue = when (defaultValue) {
+                is Boolean -> (getBoolean(property.name, defaultValue) as? T) ?: defaultValue
+                is String -> (getString(property.name, defaultValue) as? T) ?: defaultValue
+                is Float -> (getFloat(property.name, defaultValue) as? T) ?: defaultValue
+                is Int -> (getInt(property.name, defaultValue) as? T) ?: defaultValue
+                is Long -> (getLong(property.name, defaultValue) as? T) ?: defaultValue
+                else ->  error("This type can not be stored into Preferences")
             }
+            return storedValue
         }
-        return value
     }
-
     override fun setValue(thisRef: PrefManager, property: KProperty<*>, value: T?) {
-        thisRef.preferences.edit().run {
-            val key = property.name
+        with(thisRef.preferences.edit()) {
             when (value) {
-                is Boolean -> putBoolean(key, value)
-                is String -> putString(key, value)
-                is Float -> putFloat(key, value)
-                is Int -> putInt(key, value)
-                is Long -> putLong(key, value)
-                else -> throw IllegalArgumentException("Value must be primitive type")
+                is Boolean -> putBoolean(property.name, value)
+                is String -> putString(property.name, value)
+                is Float -> putFloat(property.name, value)
+                is Int -> putInt(property.name, value)
+                is Long -> putLong(property.name, value)
+                else ->  error("Only primitive types can be stored into Preferences")
             }
             apply()
         }
-        this.value = value
+        storedValue = value
     }
 }

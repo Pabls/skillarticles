@@ -1,3 +1,7 @@
 package ru.skillbranch.skillarticles.ui.custom.spans
 
-class SearchFocusSpan : SearchSpan()
+import android.graphics.Color
+
+class SearchFocusSpan() : SearchSpan() {
+
+}

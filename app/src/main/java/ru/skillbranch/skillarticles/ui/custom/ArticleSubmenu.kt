@@ -17,11 +17,11 @@ import kotlin.math.hypot
 
 class ArticleSubmenu @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null,
+    val attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) , CoordinatorLayout.AttachedBehavior {
     override fun getBehavior(): CoordinatorLayout.Behavior<ArticleSubmenu> {
-        return SubmenuBehavior()
+        return SubmenuBehavior(context, null)
     }
     var isOpen = false
     private var centerX: Float = context.dpToPx(200)

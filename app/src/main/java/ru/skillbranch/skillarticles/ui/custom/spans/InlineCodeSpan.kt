@@ -31,11 +31,13 @@ class InlineCodeSpan(
         end: Int,
         fm: Paint.FontMetricsInt?
     ): Int {
+
         paint.forText {
             val measureText = paint.measureText(text.toString(), start, end)
-            measureWidth = (measureText + 2 * padding).toInt()
+            measureWidth = (measureText + 2*padding).toInt()
         }
         return measureWidth
+
     }
 
     override fun draw(
@@ -50,30 +52,30 @@ class InlineCodeSpan(
         paint: Paint
     ) {
         paint.forBackground {
-            rect.set(x, top.toFloat(), x + measureWidth, y + paint.descent())
-            canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
+            rect.set(x, top.toFloat(), x+measureWidth, y + paint.descent())
+            canvas.drawRoundRect(rect,cornerRadius, cornerRadius, paint)
         }
 
         paint.forText {
             canvas.drawText(text, start, end, x + padding, y.toFloat(), paint)
         }
+
     }
 
     private inline fun Paint.forText(block: () -> Unit) {
-        val oldSize = textSize
+        val oldColor = color
         val oldStyle = typeface?.style ?: 0
         val oldFont = typeface
-        val oldColor = color
+        val oldSize = textSize
 
         color = textColor
         typeface = Typeface.create(Typeface.MONOSPACE, oldStyle)
         textSize *= 0.85f
-
         block()
-
         color = oldColor
         typeface = oldFont
         textSize = oldSize
+
     }
 
     private inline fun Paint.forBackground(block: () -> Unit) {
@@ -82,9 +84,7 @@ class InlineCodeSpan(
 
         color = bgColor
         style = Paint.Style.FILL
-
         block()
-
         color = oldColor
         style = oldStyle
     }

@@ -1,6 +1,7 @@
 package ru.skillbranch.skillarticles.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -8,23 +9,23 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_root.*
 import kotlinx.android.synthetic.main.layout_bottombar.*
 import ru.skillbranch.skillarticles.R
+import ru.skillbranch.skillarticles.extensions.hideKeyBoard
 import ru.skillbranch.skillarticles.extensions.selectDestination
 import ru.skillbranch.skillarticles.ui.base.BaseActivity
-import ru.skillbranch.skillarticles.viewmodels.RootState
+import ru.skillbranch.skillarticles.ui.custom.Bottombar
 import ru.skillbranch.skillarticles.viewmodels.RootViewModel
 import ru.skillbranch.skillarticles.viewmodels.base.IViewModelState
 import ru.skillbranch.skillarticles.viewmodels.base.NavigationCommand
 import ru.skillbranch.skillarticles.viewmodels.base.Notify
 
+
 class RootActivity : BaseActivity<RootViewModel>() {
 
     override val layout: Int = R.layout.activity_root
     public override val viewModel: RootViewModel by viewModels()
-    private var isAuth = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //top level destination
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_articles,
@@ -33,39 +34,29 @@ class RootActivity : BaseActivity<RootViewModel>() {
                 R.id.nav_profile
             )
         )
-
         setupActionBarWithNavController(navController, appBarConfiguration)
-//        nav_view.setupWithNavController(navController)
-
         nav_view.setOnNavigationItemSelectedListener {
-            //if click on bottom navigation item -> navigate to destination by item id
             viewModel.navigate(NavigationCommand.To(it.itemId))
             true
         }
-
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            //if destination change set select bottom navigation item
-            nav_view.selectDestination(destination)
-            if (destination.id == R.id.nav_auth && isAuth) {
+            if (viewModel.currentState.isAuth && destination.id == R.id.nav_auth) {
                 controller.popBackStack()
-                if (arguments != null && arguments["private_destination"] != null)
-                    viewModel.navigate(NavigationCommand.To(arguments["private_destination"] as Int))
+                viewModel.navigate(NavigationCommand.To(R.id.nav_profile))
             }
+            else nav_view.selectDestination(destination)
         }
+
     }
 
-    override fun subscribeOnState(state: IViewModelState) {
-        isAuth = (state as RootState).isAuth
-    }
 
     override fun renderNotification(notify: Notify) {
         val snackbar = Snackbar.make(container, notify.message, Snackbar.LENGTH_LONG)
-
-        if (bottombar != null) snackbar.anchorView = bottombar
-        else snackbar.anchorView = nav_view
+        snackbar.anchorView = findViewById<Bottombar>(R.id.bottombar) ?: nav_view
 
         when (notify) {
             is Notify.TextMessage -> {
+                snackbar.setActionTextColor(getColor(R.color.color_accent_dark))
             }
             is Notify.ActionMessage -> {
                 snackbar.setActionTextColor(getColor(R.color.color_accent_dark))
@@ -84,7 +75,20 @@ class RootActivity : BaseActivity<RootViewModel>() {
                 }
             }
         }
-
         snackbar.show()
+
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_search) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun subscribeOnState(state: IViewModelState) {
+    }
+
+
 }

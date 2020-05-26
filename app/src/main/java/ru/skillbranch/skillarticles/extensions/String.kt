@@ -1,15 +1,17 @@
 package ru.skillbranch.skillarticles.extensions
 
-fun String?.indexesOf(substr: String, ignoreCase: Boolean = true): List<Int> {
-    val result = mutableListOf<Int>()
-    if (substr.isNotEmpty() && this.isNullOrEmpty().not()) {
-        (if (ignoreCase) substr.toRegex(RegexOption.IGNORE_CASE) else substr.toRegex())
-            .findAll(this!!)
-            .forEach { matchResult ->
-                result.add(matchResult.range.first)
-            }
-    } else {
-        return emptyList()
+fun String?.indexesOf(query: String,  ignoreCase: Boolean = true): List<Int> {
+    if (this.isNullOrEmpty() || query.isBlank()) return emptyList()
+    val results = ArrayList<Int>()
+    var curIndex = 0
+    while (curIndex < this.length){
+        val index = if(ignoreCase)
+            this.toLowerCase().indexOf(query.toLowerCase(), curIndex)
+        else this.indexOf(query, curIndex)
+        if (index < 0 ) break
+        results.add(index)
+        curIndex = index + query.length
     }
-    return result
+    return results
+
 }

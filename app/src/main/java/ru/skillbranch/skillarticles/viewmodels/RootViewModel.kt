@@ -18,10 +18,9 @@ class RootViewModel(handle: SavedStateHandle) : BaseViewModel<RootState>(handle,
     }
 
     override fun navigate(command: NavigationCommand) {
-        when (command) {
+        when(command){
             is NavigationCommand.To -> {
-                if (privateRoutes.contains(command.destination) && !currentState.isAuth) {
-                    //set requested destination as arg
+                if(privateRoutes.contains(command.destination) && !currentState.isAuth){
                     super.navigate(NavigationCommand.StartLogin(command.destination))
                 } else {
                     super.navigate(command)

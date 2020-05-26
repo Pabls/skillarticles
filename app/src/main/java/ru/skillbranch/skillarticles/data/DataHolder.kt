@@ -22,11 +22,7 @@ object LocalDataHolder {
         if (localArticles[articleId] == null) {
             Log.e("DataHolder", "findArticle $articleId: ");
             val article = localArticleItems.find { it.id == articleId }
-            localArticles[articleId] = MutableLiveData(
-                EntityGenerator.generateArticle(
-                    article ?: EntityGenerator.createArticleItem(articleId)
-                )
-            )
+            localArticles[articleId] = MutableLiveData(EntityGenerator.generateArticle(article ?: EntityGenerator.createArticleItem(articleId)))
         }
         return localArticles[articleId]!!
     }

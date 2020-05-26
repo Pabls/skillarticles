@@ -1,32 +1,36 @@
 package ru.skillbranch.skillarticles.extensions
 
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.*
+import android.widget.FrameLayout
+import androidx.core.widget.NestedScrollView
 import androidx.navigation.NavDestination
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-fun View.setMarginOptionally(
-    left: Int = marginLeft,
-    top: Int = marginTop,
-    right: Int = marginRight,
-    bottom: Int = marginBottom
+fun NestedScrollView.setMarginOptionally(
+    left: Int = -1,
+    top: Int = -1,
+    right: Int = -1,
+    bottom: Int = -1
 ) {
-    val marginLayoutParams = layoutParams as? ViewGroup.MarginLayoutParams ?: return
-    layoutParams = marginLayoutParams.apply {
-        setMargins(left, top, right, bottom)
-    }
+    if (bottom >= 0) (layoutParams as FrameLayout.LayoutParams).bottomMargin = bottom
+    if (left >= 0) (layoutParams as FrameLayout.LayoutParams).leftMargin = left
+    if (top >= 0) (layoutParams as FrameLayout.LayoutParams).topMargin = top
+    if (right >= 0) (layoutParams as FrameLayout.LayoutParams).rightMargin = right
+
 }
 
 fun View.setPaddingOptionally(
     left: Int = paddingLeft,
-    top: Int = paddingTop,
     right: Int = paddingRight,
+    top: Int = paddingTop,
     bottom: Int = paddingBottom
-) = setPadding(left, top, right, bottom)
+) {
+    setPadding(left, top, right, bottom)
+}
+
 
 fun BottomNavigationView.selectDestination(destination: NavDestination) {
-    menu.forEach { menuItem ->
-        if (destination.id == menuItem.itemId) menuItem.isChecked = true
-    }
+    val menuItem = menu.findItem(destination.id)
+    menuItem?.isChecked = true
 }
+

@@ -1,9 +1,6 @@
 package ru.skillbranch.skillarticles.ui.custom.spans
 
-import android.graphics.Canvas
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.text.style.ReplacementSpan
 import androidx.annotation.ColorInt
@@ -21,9 +18,11 @@ class IconLinkSpan(
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var iconSize = 0
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var textWidth = 0f
     private val dashs = DashPathEffect(floatArrayOf(dotWidth, dotWidth), 0f)
+
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     var path = Path()
 
@@ -48,7 +47,7 @@ class IconLinkSpan(
 
         canvas.save()
         val trY = y + paint.descent() - linkDrawable.bounds.bottom
-        canvas.translate(x + padding / 2f, trY)
+        canvas.translate(x + padding/2f, trY)
         linkDrawable.draw(canvas)
         canvas.restore()
 
@@ -66,10 +65,10 @@ class IconLinkSpan(
         fm: Paint.FontMetricsInt?
     ): Int {
         if (fm != null) {
-            iconSize = fm.descent - fm.ascent //fontSize
+            iconSize = fm.descent - fm.ascent
             linkDrawable.setBounds(0, 0, iconSize, iconSize)
-        }
 
+        }
         textWidth = paint.measureText(text.toString(), start, end)
         return (iconSize + padding + textWidth).toInt()
     }
@@ -84,9 +83,7 @@ class IconLinkSpan(
         color = textColor
         style = Paint.Style.STROKE
         strokeWidth = 0f
-
         block()
-
         color = oldColor
         style = oldStyle
         strokeWidth = oldWidth
@@ -94,11 +91,9 @@ class IconLinkSpan(
 
     private inline fun Paint.forText(block: () -> Unit) {
         val oldColor = color
-
         color = textColor
-
         block()
-
         color = oldColor
     }
+
 }
