@@ -5,6 +5,7 @@ import androidx.core.text.set
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.fragment_auth.*
+import ru.skillbranch.skillarticles.ui.auth.AuthFragmentArgs
 
 import ru.skillbranch.skillarticles.R
 import ru.skillbranch.skillarticles.extensions.attrValue
